@@ -1,5 +1,6 @@
 <?php
-class Message {
+class Message
+{
 
     const LIMIT_USERNAME = 3;
     const LIMIT_MESSAGE = 10;
@@ -7,19 +8,21 @@ class Message {
     protected $message;
     protected $date;
 
-    public function __construct(string $username, string $message, ?DateTime $date = null) {
+    public function __construct(string $username, string $message, ?DateTime $date = null)
+    {
         $this->username = $username;
         $this->message = $message;
         $this->date = $date ?: new DateTime();
     }
 
-    public function isValid():bool {
-        // return strlen($this->username) >= 3 && strlen($this->message) >= 10;
+    public function isValid(): bool
+    {
         // Si le tab d'erreurs est vide alors le msg est valide
         return empty($this->getErrors());
     }
 
-    public function getErrors():array {
+    public function getErrors(): array
+    {
         $errors = [];
         if (strlen($this->username) < self::LIMIT_USERNAME) {
             $errors['username'] = 'Votre pseudo est trop court';
@@ -30,7 +33,8 @@ class Message {
         return $errors;
     }
 
-    public function toJSON(): string {
+    public function toJSON(): string
+    {
         // convertit le message (objet) en chaine de caractère
         return json_encode([
             'username' => $this->username,
@@ -38,5 +42,4 @@ class Message {
             'date' => $this->date->getTimestamp()
         ]);
     }
-
 }
